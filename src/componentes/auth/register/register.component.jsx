@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 import './register.style.css';
+// import { useNavigate } from 'react-router';
+import { Navigate } from 'react-router-dom';
+
+// const navigate = () => useNavigate();
 
 export default class Register extends Component{
     constructor(props) {
@@ -7,6 +11,7 @@ export default class Register extends Component{
         this.state = {
             username: '',
             password: '',
+            registrado: false,
         }
     }   
     onChangeUsername = (event) =>{
@@ -15,15 +20,19 @@ export default class Register extends Component{
     onChangePassword = (event) =>{
         this.setState({password: event.target.value});
     }
-    onSumbit = () =>{
-        this.props.metodo(this.state.username,this.state.password);
+    registrarOnSubmit = () =>{
+        this.props.registrar(this.state.username,this.state.password);
+        this.setState({registrado: true})
+        // const navigate = useNavigate();
+        // navigate("/");  ;
     }
     render() {
         return (
             <main className="form-signin">
-                <form onSubmit={this.onSumbit} action="/">
+                {this.state.registrado && (<Navigate to="/" replace={true} />)}
+                <form >
                         <h1 className="h1 mb-5 fw-bold">My Cash App</h1>
-                        <h3 className="h5 mb-3 fw-light">please register your account</h3>
+                        <h3 className="h5 mb-3 fw-light">Por favor salve sua conta</h3>
 
                         {/* <div className="form-floating">
                             <label for="floatingInput">First Name</label>
@@ -33,16 +42,16 @@ export default class Register extends Component{
                             <label for="floatingInput">Last Name</label>
                             <input type="text" className="form-control" id="lastName" placeholder="Doe " />
                         </div> */}
-                        <div className="form-floating">
-                            <label for="floatingInput">Email address</label>
-                            <input type="email" className="form-control" onChange={this.onChangeUsername} id="email" placeholder="name@example.com" />
+                    <div class="form-floating">
+                            <input type="email" class="form-control" id="floatingInput" onChange={this.onChangeUsername}  placeholder="name@example.com" />
+                            <label for="floatingInput">E-mail</label>
                         </div>
-                        <div className="form-floating">
-                            <label for="floatingPassword">Password</label>
-                            <input type="password" className="form-control" onChange={this.onChangePassword} id="password" placeholder="Password" />
+                        <div class="form-floating mb-4">
+                            <input type="password" class="form-control" id="floatingPassword" onChange={this.onChangePassword}  placeholder="Password" />
+                            <label for="floatingPassword">Senha</label>
                         </div>
 
-                        <button className="w-100 btn btn-lg btn-primary" type="submit">Submit</button>
+                        <button className="w-100 btn btn-lg btn-primary" type="button" onClick={this.registrarOnSubmit}>Registrar-se</button>
                         <p className="mt-5 mb-3 text-muted">&copy; 2022</p>
                 </form>
             </main>
